@@ -70,20 +70,32 @@ def login():
         if password == users[username]["password"]:
             print(f"User {username} logged in successfully!")
             print(f"Email: {users[username]['email']}")
-            logged_in()
+            logged_in(username)
         else:
             print("Wrong password.")
     else:
         print("User not found.")
 
-def logged_in():
+def logged_in(username):
     hub = input("""
           Welcome to the logged-in area! You can now access your account features.
-          (1) Log out (1)
+          (1) Display account information
+          (2) Log out
           """)
     if hub == "1":
+        print("Account Information:")
+        print(f"Username: {username}")
+        print(f"Email: {users[username]['email']}")
+    elif hub == "2":
         print("Logging out...")
         return
+    else:
+        print("Invalid option. Please enter 1 or 2.")
+        logged_in(username)
 
-load_users()
-start()
+if __name__ == "__main__":
+    try:
+        load_users()
+        start()
+    except KeyboardInterrupt:
+        print("Goodbye!")
